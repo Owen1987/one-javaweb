@@ -1,0 +1,61 @@
+package com.entity;
+
+public class product {
+ private  int proid;
+ private String proname;
+ private String proprice;
+ private String proaddress;
+ private String proimage;
+ //无参构造
+ public product() {
+	// TODO Auto-generated constructor stub
+}
+ 
+//有参构造
+   
+ public product(int proid, String proname, String proprice,
+		String proaddress, String proimage) {
+	super();
+	this.proid = proid;
+	this.proname = proname;
+	this.proprice = proprice;
+	this.proaddress = proaddress;
+	this.proimage = proimage;
+}
+
+
+
+//get、set方法
+public int getProid() {
+	return proid;
+}
+public void setProid(int proid) {
+	this.proid = proid;
+}
+public String getProname() {
+	return proname;
+}
+public void setProname(String proname) {
+	this.proname = proname;
+}
+public String getProprice() {
+	return proprice;
+}
+public void setProprice(String proprice) {
+	this.proprice = proprice;
+}
+public String getProaddress() {
+	return proaddress;
+}
+public void setProaddress(String proaddress) {
+	this.proaddress = proaddress;
+}
+public String getProimage() {
+	return proimage;
+}
+public void setProimage(String proimage) {
+	this.proimage = proimage;
+}
+ 
+ 
+}
