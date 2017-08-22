@@ -1,0 +1,88 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'register.jsp' starting page</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+   <style>
+	div{width:500px; margin:0px auto;}
+	</style>
+	<script type="text/javascript">
+      
+        //这你需要通过id节点,获取用户名，密码，
+       /*  window.onload = function(){  
+            var yhm = document.getElementById("zcusername");
+            var  mm = document.getElementById("zcpsw");
+            var  qd = document.getElementById("qd");
+		    qd.onclick =function (){
+		            if(yhm.value==""){
+		            alert("用户名不能为空！");
+		            return false;
+		            }else if(mm.value==""){
+		            alert("密码不能为空！");
+		            return false;
+		            }
+		             alert("注册成功！");
+		            }
+            
+           }*/
+        //这个是用ajax写的
+        var req = null;
+        //初始化
+        function test(){
+        var zcusername=document.all.zcusername.value;
+        var zcpsw=document.all.zcpsw.value;
+        req = new XMLHttpRequest(); 
+        req.onreadystatechange = myDeal;
+        req.open("get","xin.jsp?zcusername="+zcusername+"&zcpsw="+zcpsw,"true");
+        req.send(null);
+        }
+        function myDeal(){
+        if(req.readyState==4){
+        //接收数据
+        var ret=req.responseText;
+        //处理数据
+        document.all("myzc").innerHTML=ret;
+        }
+        }
+        </script>
+  </script>
+  </head>
+  
+  <body>
+     <div>
+        <h3>用户注册</h3>
+         <form name="reg"  action="xin.jsp" method="get">
+         <table>
+           <tr>
+             <td>用户名:</td><td><input id="zcusername" type="text" name="zcusername" onblur="test();">&nbsp;必须填写！</td><span id="myzc" name="myzc"></span>
+           </tr>
+             <tr>
+             <td>密码:</td><td><input id="zcpsw" type="password" name="zcpsw">&nbsp;必须填写！</td>
+           </tr>
+       
+           <tr>
+             <td><br></td><td><input type="button" name="submit" value="确定"  id="qd" onclick="test();">&nbsp;&nbsp;<input type="button" name="button" value="返回" onclick="javascript:location.href='index.jsp'"></button></td>
+           </tr>
+       
+         </table>
+         
+         </form>
+        </div> 
+  </body>
+</html>
