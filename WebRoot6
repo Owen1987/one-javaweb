@@ -1,0 +1,84 @@
+<%@page import="com.mysql.jdbc.ResultSet"%>
+<%@page import="com.entity.product"%>
+<%@page import="Impl.AllproductDaoImpl"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'ProductAction.jsp' starting page</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+
+  </head>
+  
+   <body>
+     
+   
+     <div id="d0">
+     <div>
+      <p>  欢迎你的光临,admin<p/>
+      <a href="index.jsp" >退出</a>   
+      </div>
+      <div class="d1">
+         <p>产品信息查询</p> 
+        <form  method="post" action="dogetproduct">
+         <table>
+          <tr>
+         <td>产品名称</td><td><input type="text" name="proname" ></td>
+         
+          </tr>
+           <tr>
+         <td></td><td><input type="submit" name="chaxun" value="查询" >&nbsp;&nbsp;<input type="submit" name="tianjia" value="添加" onclick="javascript:location.herf='addProduct.jsp' "></td>
+         
+          </tr>
+          </table>
+        </form> 
+      </div>  
+      <div class="d2">
+      <p>查询结果</p>
+          <table border="1" width="600px">
+          <tr>
+           <td><input type="checkbox" name="xuanze"></td><td>产品名称</td><td>产品产地</td><td>产品价格</td><td>产品图片</td>
+          </tr>
+          <!-- 需要全部查询数据库输出 -->
+         <%
+            request.setCharacterEncoding("utf-8");
+            //通过session把产品名称的值通过dogetproduct.java从main.jsp获取而来
+           String chaxun=(String)session.getAttribute("name");
+           out.print(chaxun);
+            //这里需要得到数据
+            if(chaxun!=null){
+            AllproductDaoImpl  pro=new AllproductDaoImpl();
+            ResultSet rs=pro.getBynameproduct(chaxun);
+            while(rs.next()){
+         
+              
+          %> 
+           <tr>
+           <td><input type="checkbox" name="xuanze"></td><td><%=rs.getString("proname") %></td><td><%=rs.getString("proaddress")%></td><td><%=rs.getString("proprice") %></td><td><img src="images/<%=rs.getString("proimage")%> " width="30px"></td> 
+          </tr>
+          
+        
+          <%   
+      } }
+      %>
+      </table>
+          <div ><input type="button" value="删除"> <input type="button" value="查看" onclick="javascript:location.href='chakan.jsp'"></div>
+     </div>   
+    </div> 
+  </body>
+</html>
