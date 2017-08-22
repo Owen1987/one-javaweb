@@ -1,0 +1,13 @@
+package com.Dao;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public interface userinfoDao {
+  //匹配登录的密码的方法
+	public boolean yz(String yhm,String mm) throws SQLException;
+ //注册的方法
+	public int Reguser(String yhm,String mm) throws SQLException;
+//查询出用户名，用于注册时候，比对时候已经注册
+	public  ResultSet cxusername(String username) throws SQLException;
+}
