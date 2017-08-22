@@ -1,0 +1,65 @@
+<%@page import="Impl.userinfoDaoImpl"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'index.jsp' starting page</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<style>
+	div{width:500px; margin:0px auto;}
+	</style>
+  </head>
+  
+  <body>
+    <%  
+       request.setCharacterEncoding("utf-8");
+       
+       String username = request.getParameter("zcusername");//获取注册填写的用户名
+       String psw = request.getParameter("zcpsw");//获取注册填写的用户密码
+       userinfoDaoImpl  user = new    userinfoDaoImpl();//---实例化，调用注册方法，把数据存入数据库
+       if(username!=null&&psw!=null){//用户名和密码都不为空，
+       int rows = user.Reguser(username,psw); //这里调用了注册Reguser的方法！
+	       if(rows>0){//验证 如果数据库有，则进入indext页面(登录)
+	       response.sendRedirect("index.jsp");
+	       }else{//进入注册
+	      
+	         
+		    response.sendRedirect("register.jsp");
+	      
+	       }     
+	         }
+     %>
+  
+     <div>
+         <h2>知创系统欢迎你！</h2>
+         <form action="main.jsp" method="post">
+         <table>
+           <tr>
+             <td>用户名:</td><td><input type="text" name="username"></td>
+           </tr>
+             <tr>
+             <td>密码:</td><td><input type="password" name="psw"></td>
+           </tr>
+           <tr>
+             <td><br></td><td><input type="submit" name="submit" value="登录">&nbsp;&nbsp;<input type="button" name="submit" value="注册" onclick="javascript:location.href='register.jsp'"></td>
+           </tr>
+         </table>
+         
+         </form>
+        </div> 
+  </body>
+</html>
