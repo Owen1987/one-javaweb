@@ -1,0 +1,71 @@
+package Impl;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.Dao.AllproductDao;
+import com.entity.product;
+import com.jdbc.DBhelper;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.ResultSet;
+
+public class AllproductDaoImpl extends DBhelper implements AllproductDao {
+
+	@Override
+	public ArrayList<product> getAllproduct() throws SQLException {
+		//建立连接，初始化
+		Connection con=null;
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+		//创建数组，用于存放产品
+		 ArrayList<product> list = new ArrayList<product>();
+		//获取数据
+		 con = DBhelper.getConnection();
+		 String sql= "select * from product";//从产品表中查询
+		 ps=(PreparedStatement) con.prepareStatement(sql);//准备发送，预编译
+		 rs=(ResultSet) ps.executeQuery();//执行查询
+		while(rs.next()){//建立一个实体对象来存放
+			product pr=new product();
+			pr.setProid(rs.getInt("proid"));
+			pr.setProname(rs.getString("proname"));
+			pr.setProprice(rs.getString("proprice"));
+			pr.setProaddress(rs.getString("proaddress"));
+			pr.setProimage(rs.getString("proimage"));
+			list.add(pr);
+		} 
+		
+		return list;
+	}
+
+	@Override
+	public ResultSet getBynameproduct(String names) throws SQLException {
+		// 根据名字进行模糊查询like ?
+		String sql="select * from product where proname=?";
+		return  (ResultSet) getResult(sql,new Object[] {names});
+	}
+
+	@Override
+	public int addapr(String proname, String propr, String proad, String propi) throws SQLException {
+		//根据产品的名称查询
+		String sql="INSERT INTO product(proname,proprice,proaddress,proimage) VALUES (?,?,?,?)";
+		return exeCommand(sql,new Object[]{proname,propr,proad,propi});
+	}
+
+	@Override
+	public int delpro(String id) throws SQLException {
+		// 根据id来删除商品
+		String sql="delete from product where proid=?";
+		return (int) exeCommand(sql,new Object[] {id});
+		
+	}
+
+	@Override
+	public ResultSet getByidproduct(String id) throws SQLException {
+		// 根据id来查询产品，实现查看功能
+		String sql="select * from product where proid=?";
+		return (ResultSet) getResult(sql, new Object[]{id});
+	}
+
+	
+}
