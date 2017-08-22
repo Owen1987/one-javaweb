@@ -1,0 +1,33 @@
+package Impl;
+//在index.jsp中需要登录需要用到
+import java.sql.SQLException;
+
+
+import com.Dao.userinfoDao;
+import com.jdbc.DBhelper;
+import com.mysql.jdbc.ResultSet;
+
+public class userinfoDaoImpl extends DBhelper implements userinfoDao{
+	//根据用户名和密码查询
+	public boolean yz(String yhm,String mm) throws SQLException{//匹配成功
+		String sql ="SELECT * FROM userinfo WHERE username=? AND psw=?";
+		ResultSet rs = (ResultSet) getResult(sql, new Object[]{yhm,mm});
+		if(rs.next()){
+			return true;
+		}
+		return false;//如果没有的next（）则返回false
+	}
+	//注册用户
+   public int Reguser(String yhm,String mm) throws SQLException{
+	   String sql="INSERT INTO `userinfo` VALUES (0,?,?)";
+	   
+	   return exeCommand(sql,new Object[]{yhm,mm}) ;
+   }
+@Override
+//查询用户名
+public  ResultSet cxusername(String username) throws SQLException {
+	String sql="select * from userinfo where username=?";
+	return (ResultSet) getResult(sql,new Object[]{username});
+	
+}
+}
