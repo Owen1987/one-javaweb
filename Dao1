@@ -1,0 +1,23 @@
+package com.Dao;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.entity.product;
+import com.jdbc.DBhelper;
+import com.mysql.jdbc.ResultSet;
+
+public interface AllproductDao {
+ //查询全部产品的方法
+	public ArrayList<product> getAllproduct() throws SQLException;
+//根据产品名称查询
+	public ResultSet getBynameproduct(String names) throws SQLException;
+//添加产品
+	public int addapr(String proname,String propr,String proad, String propi) 
+
+throws SQLException;
+//根据id来删除 产品
+	public int delpro(String id) throws SQLException;
+//根据id查看产品
+	public ResultSet getByidproduct(String id) throws SQLException;
+}
